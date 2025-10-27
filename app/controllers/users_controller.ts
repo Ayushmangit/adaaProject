@@ -64,6 +64,6 @@ export default class UsersController {
     const user = await User.find(params.id)
     if (!user) return response.notFound({ msg: 'user not found' })
     await user.delete()
-    return response.ok({ message: 'User deleted successfully' })
+    return response.ok({ msg: 'User deleted successfully' })
   }
 }
