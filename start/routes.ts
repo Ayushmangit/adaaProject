@@ -8,6 +8,7 @@
 */
 
 import RolesController from '#controllers/roles_controller'
+import ServicesController from '#controllers/services_controller'
 import UsersController from '#controllers/users_controller'
 import router from '@adonisjs/core/services/router'
 
@@ -19,5 +20,5 @@ router.get('/', async () => {
 
 router.resource('users', UsersController).apiOnly()
 router.resource('roles', RolesController).apiOnly()
-router.resource('services', 'ServicesController').apiOnly()
+router.resource('services', ServicesController).apiOnly()
 router.resource('bookings', 'BookingsController').apiOnly()

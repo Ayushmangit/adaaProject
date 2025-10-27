@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').notNullable()
       table.integer('user_id').notNullable().references('id').inTable('users')
       table.integer('service-id').notNullable().references('id').inTable('services')
-      table.time('time_slot').notNullable()
+      table.string('time_slot').notNullable()
       table.string('payment_mode').notNullable()
       table.boolean('payment_status').notNullable().defaultTo(false)
       table.timestamp('created_at').defaultTo(this.now())
