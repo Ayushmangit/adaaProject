@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('role_id').notNullable()
+      table.increments('id').notNullable()
       table.string('name', 50).notNullable().unique()
       table.timestamp('created_at').notNullable().defaultTo(this.now())
       table.timestamp('updated_at').nullable().defaultTo(this.now())
