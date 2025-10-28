@@ -7,6 +7,7 @@
 |
 */
 
+import AuthController from '#controllers/auth_controller'
 import RolesController from '#controllers/roles_controller'
 import ServicesController from '#controllers/services_controller'
 import UsersController from '#controllers/users_controller'
@@ -18,6 +19,7 @@ router.get('/', async () => {
   }
 })
 
+router.resource('auth', AuthController).apiOnly()
 router.resource('users', UsersController).apiOnly()
 router.resource('roles', RolesController).apiOnly()
 router.resource('services', ServicesController).apiOnly()
