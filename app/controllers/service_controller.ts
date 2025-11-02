@@ -29,7 +29,12 @@ export default class ServiceController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) { }
+  async show({ params, response }: HttpContext) {
+
+    const service = await Service.find(params.id)
+    if (!service) return response.notFound({ msg: `Service with id: ${params.id} does not exist` })
+    return response.ok({ msg: 'Single service', service })
+  }
 
   /**
    * Edit individual record
