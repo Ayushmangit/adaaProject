@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import ServiceSlotInfo from './service_slot_info.js'
 import * as relations from '@adonisjs/lucid/types/relations'
-import ServiceMembershipInfo from './service_membership_info.js'
+import ServiceMembershipInfos from './service_membership_info.js'
 import User from './user.js'
+import ServiceSlotInfos from './service_slot_info.js'
 
 export default class Booking extends BaseModel {
   @column({ isPrimary: true })
@@ -27,15 +27,15 @@ export default class Booking extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => ServiceSlotInfo, {
+  @belongsTo(() => ServiceSlotInfos, {
     foreignKey: 'serviceSlotInfoId',
   })
-  declare serviceSlotInfo: relations.BelongsTo<typeof ServiceSlotInfo>
+  declare serviceSlotInfos: relations.BelongsTo<typeof ServiceSlotInfos>
 
-  @belongsTo(() => ServiceMembershipInfo, {
+  @belongsTo(() => ServiceMembershipInfos, {
     foreignKey: 'serviceMembershipInfoId',
   })
-  declare serviceMembershipInfo: relations.BelongsTo<typeof ServiceMembershipInfo>
+  declare serviceMembershipInfos: relations.BelongsTo<typeof ServiceMembershipInfos>
 
   @belongsTo(() => User, {
     foreignKey: 'userId',

@@ -3,12 +3,12 @@ import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import Service from './service.js'
 import * as relations from '@adonisjs/lucid/types/relations'
 
-export default class ServiceSlotInfo extends BaseModel {
+export default class ServiceSlotInfos extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare serviceID: number
+  declare serviceId: number
 
   @column()
   declare durationSec: number
