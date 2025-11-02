@@ -6,12 +6,12 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('service_id').references('services.id')
+      table.integer('service_id').references('services.id').unsigned().onDelete('CASCADE')
       table.integer('duration_months').notNullable()
-      table.integer('price_inr').notNullable()
-      table.enu('type', ['single', 'couple', 'family'])
-      table.timestamp('created_at').notNullable()
-      table.timestamp('updated_at').nullable()
+      table.integer('price_inr').notNullable().unsigned()
+      table.enu('type', ['single', 'couple', 'family']).notNullable()
+      table.timestamps(true, true)
+      table.unique(['service_id', 'type', 'duration_months'])
     })
   }
 

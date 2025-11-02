@@ -4,8 +4,9 @@ export const serviceCreate = vine.compile(vine.object({
   name: vine.string().toLowerCase().trim(),
   imgUrl: vine.string().url(),
   description: vine.string(),
-  openAtSec: vine.number().min(0).max(24 * 60 * 60 * 60),
-  closeAtSec: vine.number().min(0).max(24 * 60 * 60 * 60),
+  openAtSec: vine.number().min(0).max(24 * 60 * 60),
+  closeAtSec: vine.number().min(0).max(24 * 60 * 60),
+
 }))
 
 
