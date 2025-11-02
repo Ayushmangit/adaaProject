@@ -44,7 +44,9 @@ export default class ServiceController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) { }
+  async update({ params, request, response }: HttpContext) {
+    const data = await serviceUpdate.validata(request.all())
+  }
 
   /**
    * Delete record
