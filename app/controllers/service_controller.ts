@@ -1,5 +1,5 @@
 import Service from '#models/service'
-import { serviceCreate } from '#validators/service'
+import { serviceCreate, serviceUpdate } from '#validators/service'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ServiceController {
@@ -45,11 +45,22 @@ export default class ServiceController {
    * Handle form submission for the edit action
    */
   async update({ params, request, response }: HttpContext) {
-    const data = await serviceUpdate.validata(request.all())
+    const data = await serviceUpdate.validate(request.all())
+    if (data.openAtSec > data.closeAtSec) return response.badRequest('The closing time should be greater than opening time')
+    const serviceToUpdate = await Service.find(params.id)
+    if (!serviceToUpdate) return response.notFound({ msg: `No service with id: ${params.id} exist` })
+    serviceToUpdate.merge(data)
+    await serviceToUpdate.save()
+    return response.ok({ msg: 'Service updated successfully', serviceToUpdate })
   }
 
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) { }
+  async destroy({ params, response }: HttpContext) {
+    const serviceToDelete = await Service.find(params.id)
+    if (!serviceToDelete) return response.notFound({ msg: 'Service not found' })
+    await serviceToDelete.delete()
+    return response.ok({ msg: 'Service deleted successfully' })
+  }
 }
