@@ -41,17 +41,22 @@ export default class BookingController {
   }
 
   /**
-   * Edit individual record
-   */
-  async edit({ params }: HttpContext) { }
-
-  /**
    * Handle form submission for the edit action
-   */
-  async update({ params, request }: HttpContext) { }
+   */ async update({ params, request, response }: HttpContext) {
+    const payload = request.all()
+    const bookingToUpdate = await Booking.query().where('id', params.id).preload('serviceSlotInfos').first()
+    if (!bookingToUpdate) return response.notFound({ msg: 'Resource not found' })
+    bookingToUpdate.merge(payload)
+    await bookingToUpdate.save()
+    return response.ok({ msg: 'Booking updated successfully', data: bookingToUpdate })
+  }
 
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) { }
+  async destroy({ params, response }: HttpContext) {
+    const bookingToDelete = await Booking.query().where('id', params.id).preload('serviceSlotInfos')
+    if (!bookingToDelete) return response.notFound({ msg: 'Resource not found' })
+    return response.ok({ msg: 'Booking deleted successfully' })
+  }
 }

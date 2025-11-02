@@ -13,7 +13,7 @@ export default class Booking extends BaseModel {
   declare serviceSlotInfoId: number
 
   @column()
-  declare serviceMembershipInfoId: number
+  declare serviceMembershipInfoId: number | null
 
   @column()
   declare userId: number
