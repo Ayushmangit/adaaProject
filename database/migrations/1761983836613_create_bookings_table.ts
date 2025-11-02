@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('service_slot_info_id').references('service_slot_infos.id')
-      table.integer('service_membership_info_id').references('service_membership_infos.id')
+      table.integer('service_membership_info_id').references('service_membership_infos.id').nullable().onDelete('SET NULL')
       table.integer('user_id').references('users.id')
       table.timestamp('start_at').notNullable()
       //table.enu('payment_mode',['upi','cash'])
