@@ -22,7 +22,8 @@ export default class ServiceController {
   async store({ request, response }: HttpContext) {
     const service = await serviceCreate.validate(request.all())
     if (service.openAtSec > service.closeAtSec) return response.badRequest('The closing time should be greater than opening time')
-    response.ok(service)
+    const createdService = await Service.create(service)
+    response.ok({ msg: 'Service created successfully,', createdService })
   }
 
   /**
