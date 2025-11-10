@@ -27,8 +27,9 @@ export default class User extends BaseModel {
       user.password = await hash.make(user.password)
     }
   }
+
   @column()
-  declare phoneNo: string
+  declare phoneNo: string // TODO: optional field
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -40,4 +41,6 @@ export default class User extends BaseModel {
 
   @hasMany(() => Booking)
   declare bookings: relations.HasMany<typeof Booking>
+
+  // TODO: check indirect relations for knowledge acquizition
 }

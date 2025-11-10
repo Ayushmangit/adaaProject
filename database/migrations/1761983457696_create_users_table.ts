@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').notNullable()
-      table.string('name', 100).notNullable().unique()
+      table.string('name', 100).notNullable().unique() //TODO: remove limit
       table.enu('role', ['admin', 'client']).notNullable().defaultTo('client')
       table.string('email', 254).nullable().unique()
       table.string('password', 255).notNullable()

@@ -7,9 +7,9 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('name').notNullable().unique()
-      table.string('img_url', 255).notNullable()
+      table.string('img_url', 255).notNullable() // TODO: remove limit
       table.text('description').nullable()
-      table.boolean('is_active').defaultTo('true')
+      table.boolean('is_active').defaultTo('true') // TODO: make it a enum: ["comming soon", "active", "maitaince..."] (default: activ)
       table.integer('open_at_sec').notNullable()
       table.integer('close_at_sec').notNullable()
       table.check('open_at_sec < close_at_sec')
