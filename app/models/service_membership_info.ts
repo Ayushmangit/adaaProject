@@ -25,6 +25,7 @@ export default class ServiceMembershipInfos extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
+  // TODO: try removing extra foreign notaion
   @belongsTo(() => Service, {
     foreignKey: 'serviceId',
   })

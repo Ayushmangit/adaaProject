@@ -16,8 +16,9 @@ export default class Service extends BaseModel {
   declare imgUrl: string
 
   @column()
-  declare description: string
+  declare description: string // optional
 
+  //TODO: Add comments above fields for good practice like (secs after midnight)
   @column()
   declare openAtSec: number
 
@@ -36,6 +37,7 @@ export default class Service extends BaseModel {
   @hasMany(() => ServiceMembershipInfos)
   declare membershipInfos: relations.HasMany<typeof ServiceMembershipInfos>
 
+  //TODO: remove this since there is no direct relations with booking
   @hasMany(() => Booking)
   declare bookings: relations.HasMany<typeof Booking>
 }
