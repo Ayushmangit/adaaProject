@@ -17,7 +17,8 @@ export default class Service extends BaseModel {
 
   @column()
   declare description: string
-
+  @column()
+  declare status: 'active' | 'maintainance' | 'coming soon'
   @column()
   declare openAtSec: number
 

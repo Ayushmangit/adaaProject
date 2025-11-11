@@ -4,10 +4,14 @@ import * as relations from '@adonisjs/lucid/types/relations'
 import ServiceMembershipInfos from './service_membership_info.js'
 import User from './user.js'
 import ServiceSlotInfos from './service_slot_info.js'
+import Service from './service.js'
 
 export default class Booking extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @column()
+  declare serviceId: number
 
   @column()
   declare serviceSlotInfoId: number | null
@@ -41,6 +45,11 @@ export default class Booking extends BaseModel {
     foreignKey: 'userId',
   })
   declare user: relations.BelongsTo<typeof User>
+
+  @belongsTo(() => Service, {
+    foreignKey: 'serviceId'
+  })
+  declare service: relations.BelongsTo<typeof Service>
 }
 
 
