@@ -28,7 +28,7 @@ export default class User extends BaseModel {
     }
   }
   @column()
-  declare phoneNo: string
+  declare phoneNo: string | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
