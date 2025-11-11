@@ -13,7 +13,26 @@ router.get('/', async () => {
 })
 
 router.resource('users', UserController).apiOnly()
-router.resource('services', ServiceController).apiOnly()
-router.resource('serviceSlotInfo', ServicesSlotInfoController).apiOnly()
-router.resource('serviceMembershipInfo', ServicesMembershipInfoController).apiOnly()
 router.resource('booking', BookingController).apiOnly()
+
+
+router.get('/api/services/', [ServiceController, 'index'])
+router.get('api/services/:service_id', [ServiceController, 'show'])
+router.post('/api/services/', [ServiceController, 'store'])
+router.patch('/api/services/:service_id', [ServiceController, 'update'])
+router.delete('/api/services/:service_id', [ServiceController, 'destroy'])
+
+router.get('api/membership/', [ServicesMembershipInfoController, 'index'])
+router.get('/api/membership/:service_membership_info_id', [ServicesMembershipInfoController, 'show'])
+router.post('/api/membership/', [ServicesMembershipInfoController, 'store'])
+router.patch('/api/membership/:service_membership_info_id', [ServicesMembershipInfoController, 'update'])
+router.delete('api/membership/:service_membership_info_id', [ServicesMembershipInfoController, 'destroy'])
+
+router.get('api/slot/', [ServicesSlotInfoController, 'index'])
+router.get('/api/slot/:service_slot_info_id', [ServicesSlotInfoController, 'show'])
+router.post('/api/slot/', [ServicesSlotInfoController, 'store'])
+router.patch('/api/slot/:service_slot_info_id', [ServicesSlotInfoController, 'update'])
+router.delete('api/slot/:service_slot_info_id', [ServicesSlotInfoController, 'destroy'])
+
+
+

@@ -1,5 +1,7 @@
 import ServiceMembershipInfos from '#models/service_membership_info'
+import { membershipCreate, membershipUpdate } from '#validators/service_membership'
 import type { HttpContext } from '@adonisjs/core/http'
+import { DurationMonths, MembershipType } from '../enum/Membership.js'
 
 export default class ServicesMembershipInfoController {
   /**
@@ -20,8 +22,12 @@ export default class ServicesMembershipInfoController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const data = request.all()
-    const membershipCreated = await ServiceMembershipInfos.create(data)
+    const data = await membershipCreate.validate(request.all())
+    const membershipCreated = await ServiceMembershipInfos.create({
+      ...data,
+      durationMonths: data.durationMonths as DurationMonths,
+      type: data.type as MembershipType,
+    })
     return response.ok({ msg: 'membership created successfully', data: membershipCreated })
   }
 
@@ -29,7 +35,7 @@ export default class ServicesMembershipInfoController {
    * Show individual record
    */
   async show({ params, response }: HttpContext) {
-    const membership = await ServiceMembershipInfos.query().where('id', params.id).preload('service')
+    const membership = await ServiceMembershipInfos.query().where('id', params.service_membership_info_id).preload('service')
     if (!membership) return response.notFound({ msg: 'No membership exist' })
     return response.ok({ msg: 'membership found', data: membership })
   }
@@ -43,10 +49,15 @@ export default class ServicesMembershipInfoController {
    * Handle form submission for the edit action
    */
   async update({ params, request, response }: HttpContext) {
-    const payload = request.all()
-    const membership = await ServiceMembershipInfos.find(params.id)
+    const payload = await membershipUpdate.validate(request.all())
+    const membership = await ServiceMembershipInfos.find(params.service_membership_info_id)
     if (!membership) return response.notFound({ msg: 'No membership exist' })
-    membership.merge(payload)
+    membership.merge({
+      serviceId: payload.serviceId,
+      durationMonths: payload.durationMonths as DurationMonths,
+      priceInr: payload.priceInr,
+      type: payload.type as MembershipType,
+    })
     await membership.save()
     return response.ok({ msg: 'updated successfully', membership })
   }

@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('service_id').references('services.id').unsigned().onDelete('CASCADE')
-      table.integer('duration_months').notNullable()
+      table.enu('duration_months', [1, 3, 6, 12]).notNullable()
       table.integer('price_inr').notNullable().unsigned()
       table.enu('type', ['single', 'couple', 'family']).notNullable()
       table.timestamps(true, true)

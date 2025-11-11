@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import Service from './service.js'
 import * as relations from '@adonisjs/lucid/types/relations'
+import { DurationMonths, MembershipType } from '../enum/Membership.js'
 
 export default class ServiceMembershipInfos extends BaseModel {
   @column({ isPrimary: true })
@@ -11,13 +12,13 @@ export default class ServiceMembershipInfos extends BaseModel {
   declare serviceId: number
 
   @column()
-  declare durationMonths: number
+  declare durationMonths: DurationMonths
 
   @column()
   declare priceInr: number
 
   @column()
-  declare type: 'single' | 'couple' | 'family'
+  declare type: MembershipType
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

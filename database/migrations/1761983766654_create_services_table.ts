@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.string('img_url').notNullable()
       table.text('description').nullable()
       table.enu('status', ['coming Soon', 'active', 'maintainance']).notNullable().defaultTo('active')
+      table.enu('service_type', ['membership', 'slot'])
       table.integer('open_at_sec').notNullable()
       table.integer('close_at_sec').notNullable()
       table.check('open_at_sec < close_at_sec')

@@ -30,9 +30,8 @@ export default class ServiceController {
    * Show individual record
    */
   async show({ params, response }: HttpContext) {
-
-    const service = await Service.find(params.id)
-    if (!service) return response.notFound({ msg: `Service with id: ${params.id} does not exist` })
+    const service = await Service.find(params.service_id)
+    if (!service) return response.notFound({ msg: `Service with id: ${params.service_id} does not exist` })
     return response.ok({ msg: 'Single service', service })
   }
 
@@ -46,9 +45,9 @@ export default class ServiceController {
    */
   async update({ params, request, response }: HttpContext) {
     const data = await serviceUpdate.validate(request.all())
-    if (data.openAtSec > data.closeAtSec) return response.badRequest('The closing time should be greater than opening time')
-    const serviceToUpdate = await Service.find(params.id)
-    if (!serviceToUpdate) return response.notFound({ msg: `No service with id: ${params.id} exist` })
+    console.log(params.service_id)
+    const serviceToUpdate = await Service.find(params.service_id)
+    if (!serviceToUpdate) return response.notFound({ msg: `No service with id: ${params.service_id} exist` })
     serviceToUpdate.merge(data)
     await serviceToUpdate.save()
     return response.ok({ msg: 'Service updated successfully', serviceToUpdate })
@@ -58,7 +57,7 @@ export default class ServiceController {
    * Delete record
    */
   async destroy({ params, response }: HttpContext) {
-    const serviceToDelete = await Service.find(params.id)
+    const serviceToDelete = await Service.find(params.service_id)
     if (!serviceToDelete) return response.notFound({ msg: 'Service not found' })
     await serviceToDelete.delete()
     return response.ok({ msg: 'Service deleted successfully' })

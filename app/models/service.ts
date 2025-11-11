@@ -16,9 +16,14 @@ export default class Service extends BaseModel {
   declare imgUrl: string
 
   @column()
+  declare serviceType: 'membership' | 'slot'
+
+  @column()
   declare description: string | null
+
   @column()
   declare status: 'active' | 'maintainance' | 'coming soon'
+
   @column()
   declare openAtSec: number
 
