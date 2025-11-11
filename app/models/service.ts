@@ -37,4 +37,6 @@ export default class Service extends BaseModel {
   @hasMany(() => ServiceMembershipInfos)
   declare membershipInfos: relations.HasMany<typeof ServiceMembershipInfos>
 
+  @hasMany(() => Booking)
+  declare bookings: relations.HasMany<typeof Booking>
 }
