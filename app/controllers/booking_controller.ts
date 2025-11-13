@@ -35,7 +35,7 @@ export default class BookingController {
 
   async update({ params, request, response }: HttpContext) {
     const payload = await bookingUpdate.validate(request.all)
-    const bookingToUpdate = await Booking.query().where('id', params.id).preload('serviceSlotInfos').first()
+    const bookingToUpdate = await Booking.query().where('id', params.booking_id).preload('serviceSlotInfos').first()
     if (!bookingToUpdate) return response.notFound({ msg: 'Resource not found' })
     if (payload.serviceMembershipInfoId && payload.serviceSlotInfoId) {
       return response.badRequest({ msg: 'either slot or membership can be chosen at once' })
@@ -53,7 +53,7 @@ export default class BookingController {
   }
 
   async destroy({ params, response }: HttpContext) {
-    const bookingToDelete = await Booking.query().where('id', params.id).preload('serviceSlotInfos')
+    const bookingToDelete = await Booking.query().where('id', params.booking_id).preload('serviceSlotInfos')
     if (!bookingToDelete) return response.notFound({ msg: 'Resource not found' })
     return response.ok({ msg: 'Booking deleted successfully' })
   }
