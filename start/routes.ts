@@ -13,7 +13,6 @@ router.get('/', async () => {
 })
 
 router.resource('users', UserController).apiOnly()
-router.resource('booking', BookingController).apiOnly()
 
 
 router.get('/api/services/', [ServiceController, 'index'])
@@ -34,5 +33,10 @@ router.post('/api/slot/', [ServicesSlotInfoController, 'store'])
 router.patch('/api/slot/:service_slot_info_id', [ServicesSlotInfoController, 'update'])
 router.delete('api/slot/:service_slot_info_id', [ServicesSlotInfoController, 'destroy'])
 
+router.get('api/booking/', [BookingController, 'index'])
+router.get('api/booking/:booking_id', [BookingController, 'show'])
+router.post('api/booking/', [BookingController, 'store'])
+router.patch('api/booking/:booking_id', [BookingController, 'update'])
+router.delete('api/booking/:booking_id', [BookingController, 'destroy'])
 
 
