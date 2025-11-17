@@ -41,8 +41,8 @@ router.post('api/booking/', [BookingController, 'store'])
 router.patch('api/booking/:booking_id', [BookingController, 'update'])
 router.delete('api/booking/:booking_id', [BookingController, 'destroy'])
 
-router.post('api/auth/register', [AuthController, 'register'])
-router.post('api/auth/login', [AuthController, 'login'])
-router.delete('api/auth/logout', [AuthController, 'logout']).use(middleware.auth())
-router.get('api/auth/me', [AuthController, 'me'])
+router.post('/api/auth/register', [AuthController, 'register'])
+router.post('/api/auth/login', [AuthController, 'login'])
+router.delete('/api/auth/logout', [AuthController, 'logout']).use(middleware.auth())
+router.get('/api/auth/me', [AuthController, 'me'])
 

@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.integer('service_id').references('services.id').unsigned().onDelete('CASCADE')
       table.integer('duration_sec').notNullable()
       table.integer('price_inr').notNullable().unsigned()
+      table.unique(['service_id', 'duration_sec', 'price_inr'])
       table.timestamps(true, true)
     })
   }
