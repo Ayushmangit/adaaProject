@@ -6,7 +6,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class ServicesSlotInfoController {
   async index({ response }: HttpContext) {
     const slotInfo = await ServiceSlotInfo.query().preload('service')
-    return response.ok({ msg: 'All the services with slot Info', slotInfo })
+    return response.ok(slotInfo)
   }
 
   async create({ }: HttpContext) { }
@@ -18,13 +18,13 @@ export default class ServicesSlotInfoController {
     if (service.serviceType !== 'slot') return response.badRequest({ msg: 'Slots can\'t be created for memberships' })
 
     const slotInfoCreation = await ServiceSlotInfo.create(data)
-    return response.ok({ msg: 'slot created successfully', slotInfoCreation })
+    return response.ok(slotInfoCreation)
   }
 
   async show({ params, response }: HttpContext) {
     const serviceSlotToShow = await ServiceSlotInfo.query().where('id', params.service_slot_info_id).preload('service').first()
     if (!serviceSlotToShow) return response.notFound({ msg: 'slot information not found' })
-    return response.ok({ msg: 'service slot retrieved successfully', data: serviceSlotToShow })
+    return response.ok(serviceSlotToShow)
   }
 
   async update({ params, request, response }: HttpContext) {
@@ -34,7 +34,7 @@ export default class ServicesSlotInfoController {
     slotToUpdate.merge(data)
     await slotToUpdate.save()
 
-    return response.ok({ msg: 'Slot updated Successfully', data: slotToUpdate })
+    return response.ok(slotToUpdate)
   }
 
   async destroy({ params, response }: HttpContext) {

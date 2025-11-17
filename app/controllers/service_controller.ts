@@ -5,7 +5,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class ServiceController {
   async index({ response }: HttpContext) {
     const services = await Service.query()
-    return response.ok({ msg: 'All services', services })
+    return response.ok(services)
   }
 
   async create({ }: HttpContext) { }
@@ -14,13 +14,13 @@ export default class ServiceController {
     const service = await serviceCreate.validate(request.all())
     if (service.openAtSec > service.closeAtSec) return response.badRequest('The closing time should be greater than opening time')
     const createdService = await Service.create(service)
-    response.ok({ msg: 'Service created successfully,', createdService })
+    response.ok(createdService)
   }
 
   async show({ params, response }: HttpContext) {
     const service = await Service.find(params.service_id)
     if (!service) return response.notFound({ msg: `Service with id: ${params.service_id} does not exist` })
-    return response.ok({ msg: 'Single service', service })
+    return response.ok(service)
   }
 
   async update({ params, request, response }: HttpContext) {
@@ -30,7 +30,7 @@ export default class ServiceController {
     if (!serviceToUpdate) return response.notFound({ msg: `No service with id: ${params.service_id} exist` })
     serviceToUpdate.merge(data)
     await serviceToUpdate.save()
-    return response.ok({ msg: 'Service updated successfully', serviceToUpdate })
+    return response.ok(serviceToUpdate)
   }
 
   async destroy({ params, response }: HttpContext) {

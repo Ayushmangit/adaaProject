@@ -1,11 +1,17 @@
 import { DateTime } from 'luxon'
-import hash from '@adonisjs/core/services/hash'
+import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, beforeSave, column, hasMany } from '@adonisjs/lucid/orm'
+import hash from '@adonisjs/core/services/hash'
+import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import Booking from './booking.js'
 import * as relations from '@adonisjs/lucid/types/relations'
+const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
+  uids: ['name'],
+  passwordColumnName: 'password',
+})
 
-export default class User extends BaseModel {
+export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
   declare id: number
 
@@ -21,14 +27,9 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   declare password: string
 
-  @beforeSave()
-  public static async hashPassword(user: User) {
-    if (user.$dirty.password) {
-      user.password = await hash.make(user.password)
-    }
-  }
   @column()
   declare phoneNo: string | null
+
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -41,3 +42,4 @@ export default class User extends BaseModel {
   @hasMany(() => Booking)
   declare bookings: relations.HasMany<typeof Booking>
 }
+

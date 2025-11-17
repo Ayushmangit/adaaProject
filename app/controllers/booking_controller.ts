@@ -13,6 +13,7 @@ export default class BookingController {
 
   async store({ request, response }: HttpContext) {
     const data = await bookingCreate.validate(request.all())
+    console.log(data)
 
     if (data.serviceMembershipInfoId && data.serviceSlotInfoId) {
       return response.badRequest({ msg: 'either slot or membership can be chosen at once' })

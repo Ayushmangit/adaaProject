@@ -6,7 +6,7 @@ import { DurationMonths, MembershipType } from '../enum/Membership.js'
 export default class ServicesMembershipInfoController {
   async index({ response }: HttpContext) {
     const servicesWithMembership = await ServiceMembershipInfos.query().preload('service')
-    return response.ok({ msg: 'all the services with memberships', data: servicesWithMembership })
+    return response.ok(servicesWithMembership)
   }
 
 
@@ -18,13 +18,13 @@ export default class ServicesMembershipInfoController {
       durationMonths: data.durationMonths as DurationMonths,
       type: data.type as MembershipType,
     })
-    return response.ok({ msg: 'membership created successfully', data: membershipCreated })
+    return response.ok(membershipCreated)
   }
 
   async show({ params, response }: HttpContext) {
     const membership = await ServiceMembershipInfos.query().where('id', params.service_membership_info_id).preload('service')
     if (!membership) return response.notFound({ msg: 'No membership exist' })
-    return response.ok({ msg: 'membership found', data: membership })
+    return response.ok(membership)
   }
 
 
@@ -39,11 +39,11 @@ export default class ServicesMembershipInfoController {
       type: payload.type as MembershipType,
     })
     await membership.save()
-    return response.ok({ msg: 'updated successfully', membership })
+    return response.ok(membership)
   }
 
   async destroy({ params, response }: HttpContext) {
-    const membership = await ServiceMembershipInfos.find(params.id)
+    const membership = await ServiceMembershipInfos.find(params.service_membership_info_id)
     if (!membership) return response.notFound({ msg: 'No membership exist' })
     membership.delete()
     return response.ok({ msg: 'deleted successfully' })
